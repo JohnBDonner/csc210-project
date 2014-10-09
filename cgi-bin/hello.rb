@@ -3,16 +3,19 @@
 require "cgi"
 require "sqlite3"
 
-=begin
 cgi = CGI.new
 
-form = cgi.params
-=end
+user_name = cgi['name']
+user_email = cgi['email']
+user_password = cgi['password']
 
 begin
 
 	db = SQLite3::Database.new ":memory:"
-	puts db.get_first_value 'SELECT SQLITE_VERSION()'
+	db.execute "CREATE TABLE IF NOT EXISTS User(name varchar(100),
+	 email varchar(100) PRIMARY KEY, password varchar(100))"
+	db.execute "INSERT INTO User VALUES('"+user_name+"',
+	 '"+user_email+"', '"+user_password+"')"
 
 rescue SQLite3::Exception => e
 
@@ -23,14 +26,11 @@ ensure
 	db.close if db
 end
 
-=begin
-
 print cgi.header()
 
 puts "<html>"
 puts "<body>"
-puts "hello"
+puts "<p>Hello, " + user_name + ". Your account has been created.</p>"
+puts "<p>Your associated email to this account is " + user_email + ".</p>"
 puts "</body>"
 puts "</html>"
-
-=end
