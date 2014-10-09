@@ -4,3 +4,4 @@ require "cgi"
 
 cgi = CGI.new
 
+form = cgi.params
