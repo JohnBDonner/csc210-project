@@ -70,6 +70,8 @@ else
 			cookie = CGI::Cookie.new('name' => 'user_id',
 		                         'value' => user_sessionID,
 		                         'expires' => Time.now + 3600)
+			db.execute "INSERT OR REPLACE INTO users VALUES('"+db_user['name']+"', 
+				'"+db_user['email']+"', '"+db_user['password']+"', '"+user_sessionID+"');"
 			
 			# print html
 			puts cgi.header("cookie" => cookie)
