@@ -14,15 +14,25 @@ user_password = cgi['password']
 # try to get the cookie from the browser
 cookie = cgi.cookies['user_id']
 if cookie.to_s() != '[]'
+	# cookie found
 	# extract sessionID from cookie to display
 	user_sessionID = cookie.value[0]
+
+	# go into database
+	db = SQLite3::Database.new "users.db"
+	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
+					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
+	stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
+	rs = stm.execute
+	db_user = rs.next_hash
 
 	# print the html code
 	puts cgi.header()
 
 	puts "<html>"
 	puts "<body>"
-	puts "<p>Hello, " + user_name + ". You are already logged in.</p>"
+	puts "<p> cookie found </p>"
+	puts "<p>Hello, " + db_user['name'] + ". You are already logged in.</p>"
 	puts "<p>SessionID: " + user_sessionID + "</p>"
 	puts "<p>There is a cookie!</p>"
 	puts "<p>cookie: '" + cookie.to_s() + "'</p>"
@@ -30,16 +40,19 @@ if cookie.to_s() != '[]'
 	puts "</body>"
 	puts "</html>"
 else
+	# cookie NOT found
 	# insert new user into database
 	db = SQLite3::Database.new "users.db" # Change ':memory:' to 'users.db' to write to the database
+	# db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
+	#				email varchar(100) PRIMARY KEY, password varchar(100));"
 	stm = db.prepare "SELECT * FROM users WHERE email='"+user_email+"';" 
     rs = stm.execute
     if rs.next_hash.nil?
     	# database returned nil on searching for inputed email; make new user
 		db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
-					email varchar(100) PRIMARY KEY, password varchar(100));"
+					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
 		db.execute "INSERT INTO users VALUES('"+user_name+"',
-		 '"+user_email+"', '"+user_password+"');"
+		 '"+user_email+"', '"+user_password+"', '"+user_sessionID+"');"
 		
 		# create cookie
 		cookie = CGI::Cookie.new('name' => 'user_id',
