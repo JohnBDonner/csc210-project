@@ -36,7 +36,7 @@ if cookie.to_s() != '[]'
 	puts "<p>SessionID: " + user_sessionID + "</p>"
 	puts "<p>There is a cookie!</p>"
 	puts "<p>cookie: '" + cookie.to_s() + "'</p>"
-	puts "<a href='/index.html'><button>Home</button></a>"
+	puts "<a href='home.rb'><button>Home</button></a>"
 	puts "</body>"
 	puts "</html>"
 else
@@ -68,7 +68,7 @@ else
 		puts "<p>Your associated email to this account is " + user_email + ".</p>"
 		puts "<p>SessionID: " + user_sessionID + "</p>"
 		puts "<p>You now have a NEW cookie! " + cookie.to_s() +"</p>"
-		puts "<a href='/index.html'><button>Home</button></a>"
+		puts "<a href='home.rb'><button>Home</button></a>"
 		puts "</body>"
 		puts "</html>"
 	else
@@ -80,8 +80,8 @@ else
 		puts "<body>"
 		puts "<p>The email you entered, " + user_email + ", already exists in the database.</p>"
 		puts "<p>Please use another email or login if you have an account.</p>"
-		puts "<a href='/index.html'><button>Home</button></a>"
-		puts "<a href='/signup.html'><button>Signup</button></a>"
+		puts "<a href='home.rb'><button>Home</button></a>"
+		puts "<a href='signup.rb'><button>Signup</button></a>"
 		puts "</body>"
 		puts "</html>"
 	end
