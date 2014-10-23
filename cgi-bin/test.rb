@@ -1,8 +1,28 @@
 #!/usr/bin/ruby
 
-puts "Content-type: text/html"
-puts
+require 'cgi'
+require 'erb'
 
-puts "<html>"
-puts "<body>hello in Ruby</body>"
-puts "</html>"
+
+cgi = CGI.new
+
+puts cgi.header()
+
+erb = ERB.new(File.open("./test.html.erb").read)
+puts erb.result
+
+
+=begin
+cgi.out{
+	cgi.html{
+		cgi.head{
+			cgi.title{"test"}
+		}
+		cgi.body{
+			cgi.p{"hello in ruby"}
+			cgi.a{"hello"}
+		}
+	}
+}
+=end
+
