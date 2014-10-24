@@ -1,7 +1,6 @@
 # ignore the databases #
 ########################
 
-.DS_Store
-.DS_Store?
+# .DS_Store
+# .DS_Store?
 cgi-bin/users.db
-*.db
