@@ -3,5 +3,5 @@
 
 .DS_Store
 .DS_Store?
-users.db
+cgi-bin/users.db
 *.db
