@@ -1,0 +1,7 @@
+# ignore the databases #
+########################
+
+.DS_Store
+.DS_Store?
+users.db
+*.db
