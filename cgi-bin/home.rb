@@ -38,7 +38,7 @@ if cookie.to_s() != '[]'
 	db_user = rs.next_hash
 
 	puts "<h4>Welcome " + db_user['name'] + ", you can logout (not really) below.</h4>"
-	puts "<a data-method='delete' href='logout.rb' rel='nofollow'><button>logout</button></a>"
+	puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
 	# Code from rails: <a data-method="delete" href="/signout" rel="nofollow">Sign out</a>
 else
 	# no cookie, no one's signed in
