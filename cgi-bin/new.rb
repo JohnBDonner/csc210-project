@@ -31,7 +31,7 @@ if cookie.to_s() != '[]'
 
 	# go into database
 	db = SQLite3::Database.new "users.db"
-	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
+	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), description varchar(1000));"
 	stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 	rs = stm.execute
 	db_user = rs.next_hash
@@ -52,7 +52,7 @@ else
 	# cookie NOT found
 	# check database for user
 	db = SQLite3::Database.new "users.db"
-	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
+	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), description varchar(1000));"
 	stm = db.prepare "SELECT * FROM users WHERE email='"+user_email+"';" 
     rs = stm.execute
     if rs.next_hash.nil?

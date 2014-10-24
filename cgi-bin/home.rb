@@ -37,8 +37,9 @@ if cookie.to_s() != '[]'
 	rs = stm.execute
 	db_user = rs.next_hash
 
-	puts "<h4>Welcome " + db_user['name'] + ", you can logout (not really) below.</h4>"
+	puts "<h4>Welcome " + db_user['name'] + ", you are signed in. If you want, you can logout below.</h4>"
 	puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
+	puts "<a href='user.rb'><button>Profile</button></a>"
 	# Code from rails: <a data-method="delete" href="/signout" rel="nofollow">Sign out</a>
 else
 	# no cookie, no one's signed in
