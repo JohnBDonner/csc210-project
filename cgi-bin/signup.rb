@@ -22,7 +22,7 @@ puts "<input type='email' name='email' placeholder='yourname@email.com' required
 puts "<li><label for='password'>Password</label>"
 puts "<input type='password' name='password' placeholder='password' required></li>"
 puts "<li>"
-puts "<input type='submit' value='Login'></li>"
+puts "<input type='submit' value='Signup'></li>"
 puts "</ul>"
 puts "</form>"
 puts "</section>"

@@ -10,8 +10,16 @@ user_sessionID = SecureRandom.uuid
 user_email = cgi['email']
 user_password = cgi['password']
 
-if user_email == '[]' || user_password = '[]'
-	puts cgi.header("status" => "302", "location" => "login.rb")
+# check if user is logged in and redirect
+cookie = cgi.cookies['user_id']
+if cookie.to_s() != '[]'
+	# cookie found, redirect to home
+	puts cgi.header("status" => "302", "location" => "home.rb")
+else
+	# cookie not found, check if form is complete
+	if user_email == '' || user_password == ''
+		puts cgi.header("status" => "302", "location" => "login.rb")
+	end
 end
 
 # try to get the cookie from the browser

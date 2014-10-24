@@ -11,8 +11,16 @@ user_name = cgi['name']
 user_email = cgi['email']
 user_password = cgi['password']
 
-if user_name == '[]' || user_email == '[]' || user_password = '[]'
-	puts cgi.header("status" => "302", "location" => "signup.rb")
+cookie = cgi.cookies['user_id']
+if cookie.to_s() != '[]'
+	# cookie found
+	puts cgi.header("status" => "302", "location" => "home.rb")
+else
+	# cookie not found
+	# if username, email or password is empty, then return to signup
+	if user_name == '' || user_email == '' || user_password == ''
+		puts cgi.header("status" => "302", "location" => "signup.rb")
+	end
 end
 
 # try to get the cookie from the browser
