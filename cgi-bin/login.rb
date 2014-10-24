@@ -7,7 +7,15 @@ cgi = CGI.new
 puts cgi.header()
 
 puts "<html>"
+# What's the correct way to redirect a login page?
+# if statement that redirects to home if already logged in
 puts "<head>"
+cookie = cgi.cookies['user_id']
+=begin
+if cookie.to_s() != '[]'
+	puts '<meta http-equiv="refresh" content="0; url=home.rb" />'
+end
+=end
 puts "</title></title>"
 puts "</head>"
 puts "<body>"
