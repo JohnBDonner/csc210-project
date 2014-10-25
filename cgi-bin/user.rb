@@ -22,13 +22,15 @@ if cookie != '[]'
 
 	if cgi.request_method == 'POST'
 		db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
-					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), description varchar(1000));"
-		db.execute "UPDATE users SET description = '" + "' WHERE sessionID is " + user_sessionID
+					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
+		# db.execute "UPDATE users SET text = '"+cgi['comments']+"' WHERE sessionID ='" + user_sessionID+"?';"
+		db.execute "UPDATE users SET bio = ? WHERE sessionID = ?;", [cgi['comments'], user_sessionID]
+		puts "<h6 style='margin: 0 0 0 0;'>You've successfully updated your bio.</h6>"
 	end
 
 	# go into database
 	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
-					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), description varchar(1000));"
+					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
 	stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 	rs = stm.execute
 	db_user = rs.next_hash
@@ -38,7 +40,7 @@ if cookie != '[]'
 							'Click <a data-method="DELETE" href="logout.rb"' + 
 							' rel="nofollow">here</a> to logout.</h6>'
 
-	puts '<p>bio: ' + db_user['description'] + ' | <a href="about.rb">edit</a></p>'
+	puts '<p>bio: ' + db_user['bio'] + ' <br><a href="about.rb">edit</a></p>'
 	puts '<a href="home.rb"><button>Home</button></a>'
 else
 	puts '<a href="home.rb"><button>Home</button></a>'
