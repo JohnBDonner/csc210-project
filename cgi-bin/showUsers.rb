@@ -41,10 +41,13 @@ if cookie.to_s() != '[]'
 		while notNil
 			tempUser = rs.next_hash
 			if !tempUser.nil?
-				if tempUser['email'] != db_user['email']
-					puts "<a href='#'><li class='userLink' id='"+tempUser['rowid'].to_s+"'>"+tempUser['rowid'].to_s+" | "+tempUser['name']+"</li></a>"
+				email = tempUser['email']
+				name = tempUser['name']
+				id = tempUser['rowid'].to_s
+				if email != db_user['email']
+					puts "<a href='#' data=><li class='userLink' id='"+id+"'>"+id+" | "+name+"</li></a>"
 				else
-					puts "<li class='userLink' id='"+tempUser['rowid'].to_s+"'>"+tempUser['rowid'].to_s+" | "+tempUser['name']+"</li>"
+					puts "<li class='userLink' id='"+id+"'>"+id+" | "+name+"</li>"
 				end
 			else
 				notNil = false
