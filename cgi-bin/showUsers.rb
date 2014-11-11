@@ -9,6 +9,12 @@ cookie = cgi.cookies['user_id']
 if cookie.to_s() != '[]'
 	### Found cookie, user is signed in ###
 	puts cgi.header()
+	puts '<html>'
+	puts '<head>'
+	puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
+	puts "<script type='text/javascript' src='/assets/script.js'></script>"
+	puts '</head>'
+	puts '<body>'
 
 	user_sessionID = cookie.value[0]
 	begin
@@ -20,15 +26,36 @@ if cookie.to_s() != '[]'
 		rs = stm.execute
 		db_user = rs.next_hash
 
-		stm = db.prepare "SELECT * FROM users;"
+		stm = db.prepare "SELECT rowid, * FROM users;"
 		rs = stm.execute
 
 		# Need to check information against signed in user...
 		puts "<h3>Users</h3>"
 
-		while !rs.nil?
-			puts "<li>" + rs.next_hash['name'] + "</li>"
+		# # # # # # # # # #
+		# user ID might not be fully unique (can condense the database table and reset id numbers)
+		# so it might be a good idea to change our "Primary Key" to a new column that autoincrements
+		# called "user_id" or something like that.
+		# # # # # # # # # #
+		notNil = true
+		while notNil
+			tempUser = rs.next_hash
+			if !tempUser.nil?
+				if tempUser['email'] != db_user['email']
+					puts "<a href='#'><li class='userLink' id='"+tempUser['rowid'].to_s+"'>"+tempUser['rowid'].to_s+" | "+tempUser['name']+"</li></a>"
+				else
+					puts "<li class='userLink' id='"+tempUser['rowid'].to_s+"'>"+tempUser['rowid'].to_s+" | "+tempUser['name']+"</li>"
+				end
+			else
+				notNil = false
+			end
 		end
+
+		puts '<a href="home.rb"><button>Home</button></a>'
+
+
+		puts '</body>'
+		puts '</html>'
 
 	rescue SQLite3::Exception => e
 		puts "<p>Exception occured</p>"

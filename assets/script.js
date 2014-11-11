@@ -1,6 +1,10 @@
 // perform code when the document is ready
 $(document).ready(function() {
 
+	/***** Events for making user pages *****/
+
+	/***** Events for editing your profile *****/
+
 	// AJAX event for clicking the edit bio button
 	$("#bio").on("click", "#inline-edit", function() {
 
