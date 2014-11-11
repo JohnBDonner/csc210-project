@@ -9,6 +9,8 @@ puts cgi.header()
 
 puts '<html>'
 puts '<head>'
+puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
+puts "<script type='text/javascript' src='/assets/script.js'></script>"
 puts '</head>'
 puts '<body>'
 
@@ -40,7 +42,11 @@ if cookie != '[]'
 							'Click <a data-method="DELETE" href="logout.rb"' + 
 							' rel="nofollow">here</a> to logout.</h6>'
 
+<<<<<<< HEAD
 	puts '<p>bio: ' + db_user['bio'] + ' <br><a class="edit" href="about.rb">edit</a></p>'
+=======
+	puts '<div id="bio"><p>bio: ' + db_user['bio'] + ' <br><div id="inline-edit" style="display: inline-block"><a href="#">edit</a></div></p></div>'
+>>>>>>> 0d14ceb8e61e762281f755a458438fabd2f6562f
 	puts '<a href="home.rb"><button>Home</button></a>'
 else
 	puts '<a href="home.rb"><button>Home</button></a>'
