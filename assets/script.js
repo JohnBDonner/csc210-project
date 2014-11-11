@@ -17,7 +17,7 @@ $(document).ready(function() {
 	        success: function(dat) {
 	        	$('#bio').empty();
 	        	$('#bio').append('<textarea id="editBio" name="comments" cols="25" rows="5" placeholder="tell us a bit about yourself...">'+dat.bio+'</textarea>');
-	        	$('#bio').append('<br><div id="inline-submit"><a href="#">Submit</a></div>');
+	        	$('#bio').append('<br><div id="inline-submit" style="display: inline-block"><a href="#">Submit</a></div>');
 	        	console.dir(dat.bio);
 	        	console.log(dat.bio);
 	        },
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	        dataType: "json",
 	        success: function(dat) {
 	        	$('#bio').empty();
-	        	$('#bio').append('<p>bio: ' + dat.bio + ' <br><div id="inline-edit"><a href="#">edit</a></div></p>');
+	        	$('#bio').append('<p>bio: ' + dat.bio + ' <br><div id="inline-edit" style="display: inline-block"><a href="#">edit</a></div></p>');
 	        	console.dir(dat.bio);
 	        	console.log(dat.bio);
 	        },

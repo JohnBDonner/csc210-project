@@ -42,7 +42,7 @@ if cookie != '[]'
 							'Click <a data-method="DELETE" href="logout.rb"' + 
 							' rel="nofollow">here</a> to logout.</h6>'
 
-	puts '<div id="bio"><p>bio: ' + db_user['bio'] + ' <br><div id="inline-edit"><a href="#">edit</a></div></p></div>'
+	puts '<div id="bio"><p>bio: ' + db_user['bio'] + ' <br><div id="inline-edit" style="display: inline-block"><a href="#">edit</a></div></p></div>'
 	puts '<a href="home.rb"><button>Home</button></a>'
 else
 	puts '<a href="home.rb"><button>Home</button></a>'
