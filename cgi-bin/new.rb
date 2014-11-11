@@ -32,8 +32,8 @@ if cookie.to_s() != '[]'
 
 	# go into database
 	db = SQLite3::Database.new "users.db"
-	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
-					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
+	db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
+					email varchar(100), password varchar(100), sessionID varchar(100), bio text);"
 	stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 	rs = stm.execute
 	db_user = rs.next_hash
@@ -61,9 +61,9 @@ else
     rs = stm.execute
     if rs.next_hash.nil?
     	# database returned nil on searching for inputed email; make new user
-		db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
-					email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
-		db.execute "INSERT INTO users VALUES(?, ?, ?, ?, ?);", [user_name, user_email, user_password, user_sessionID, '']
+		db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
+					email varchar(100), password varchar(100), sessionID varchar(100), bio text);"
+		db.execute "INSERT INTO users (name, email, password, sessionID, bio) VALUES(?, ?, ?, ?, ?);", [user_name, user_email, user_password, user_sessionID, '']
 		
 		# create cookie
 		cookie = CGI::Cookie.new('name' => 'user_id',

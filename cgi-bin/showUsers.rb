@@ -43,12 +43,13 @@ if cookie.to_s() != '[]'
 			if !tempUser.nil?
 				email = tempUser['email']
 				name = tempUser['name']
-				id = tempUser['rowid'].to_s
+				id = tempUser['user_id'].to_s
 				if email != db_user['email']
 					puts "<a href='#' data=><li class='userLink' id='"+id+"'>"+id+" | "+name+"</li></a>"
 				else
 					puts "<li class='userLink' id='"+id+"'>"+id+" | "+name+"</li>"
 				end
+				puts "<p>"+tempUser.to_s+"</p>"
 			else
 				notNil = false
 			end
