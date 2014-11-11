@@ -14,8 +14,8 @@ puts cgi.header()
 # print the home application html
 puts "<html>"
 puts "<head>"
-# puts "<script type='text/javascript' src='jquery.min.js'></script>"
-# puts "<script type='text/javascript' src='script.js'></script>"
+puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
+puts "<script type='text/javascript' src='/assets/script.js'></script>"
 puts "<title>title</title>"
 puts "</head>"
 puts "<body>"
