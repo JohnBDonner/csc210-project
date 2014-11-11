@@ -31,7 +31,8 @@ if cookie.to_s() != '[]'
 
 	# go into database
 	db = SQLite3::Database.new "users.db"
-	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
+	db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
+					email varchar(100), password varchar(100), sessionID varchar(100), bio text);"
 	stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 	rs = stm.execute
 	db_user = rs.next_hash
@@ -52,7 +53,8 @@ else
 	# cookie NOT found
 	# check database for user
 	db = SQLite3::Database.new "users.db"
-	db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100), email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
+	db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
+					email varchar(100), password varchar(100), sessionID varchar(100), bio text);"
 	stm = db.prepare "SELECT * FROM users WHERE email='"+user_email+"';" 
     rs = stm.execute
     if rs.next_hash.nil?
@@ -78,8 +80,8 @@ else
 		if db_user['password'] == user_password
 			# create cookie
 			cookie = CGI::Cookie.new('name' => 'user_id', 'value' => user_sessionID, 'expires' => Time.now + (60*60*24*7))
-			db.execute "INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?);", [db_user['name'], db_user['email'], db_user['password'], user_sessionID, db_user['bio']]
-			
+			db.execute "UPDATE users SET sessionID=? WHERE email=?", [user_sessionID, db_user['email']]
+
 			# print html
 			puts cgi.header("cookie" => cookie)
 
@@ -89,6 +91,8 @@ else
 			puts "<a href='home.rb'><button>Home</button></a>"
 			puts "<p>SessionID: " + user_sessionID + "</p>"
 			puts "<p>You now have a NEW cookie! " + cookie.to_s() +"</p>"
+			# temp
+			puts "<p>" + db_user.to_s + "</p>"
 			puts "</body>"
 			puts "</html>"
 		else
