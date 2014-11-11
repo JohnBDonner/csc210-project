@@ -13,15 +13,14 @@ puts '{"name": "Alice"}'
 =end
 cookie = cgi.cookies['user_id']
 
-#if cookie.to_s() != '[]'
-	#user_sessionID = cookie.value[0]
+if cookie.to_s() != '[]'
+	user_sessionID = cookie.value[0]
 	begin
 		db = SQLite3::Database.new "users.db"
 		# go into database
 		db.execute "CREATE TABLE IF NOT EXISTS users(name varchar(100),
 						email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100), bio text);"
-		#stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
-		stm = db.prepare "SELECT * FROM users WHERE sessionID='"+"de92a883-43ec-4981-b435-27dad09f04bc"+"';"
+		stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 		rs = stm.execute
 		db_user = rs.next_hash
 
@@ -46,7 +45,7 @@ cookie = cgi.cookies['user_id']
 	ensure
 		db.close if db
 	end
-#end
+end
 
 
 =begin
