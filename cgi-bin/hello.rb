@@ -91,8 +91,6 @@ else
 			puts "<a href='home.rb'><button>Home</button></a>"
 			puts "<p>SessionID: " + user_sessionID + "</p>"
 			puts "<p>You now have a NEW cookie! " + cookie.to_s() +"</p>"
-			# temp
-			puts "<p>" + db_user.to_s + "</p>"
 			puts "</body>"
 			puts "</html>"
 		else

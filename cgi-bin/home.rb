@@ -39,7 +39,7 @@ if cookie.to_s() != '[]'
 
 	puts "<h4>Welcome " + db_user['name'] + ", you are signed in. If you want, you can logout below.</h4>"
 	puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
-	puts "<a href='user.rb'><button>Profile</button></a>"
+	puts "<a href='user.rb?id="+db_user['user_id'].to_s+"'><button>Profile</button></a>"
 	puts "<a href='showUsers.rb'><button>Users</button></a>"
 	# Code from rails: <a data-method="delete" href="/signout" rel="nofollow">Sign out</a>
 else
