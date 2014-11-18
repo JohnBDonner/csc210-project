@@ -2,6 +2,7 @@
 
 require 'cgi'
 require 'sqlite3'
+require_relative 'header.rb'
 
 class String
 	def is_i?
@@ -38,10 +39,15 @@ if userShow != '' && userShow.is_i?
 
 				puts '<html>'
 				puts '<head>'
+				puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
+				puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
 				puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
 				puts "<script type='text/javascript' src='/assets/script.js'></script>"
 				puts '</head>'
 				puts '<body>'
+				pageHeader()
+				puts "<div class='body-container'>"
+				puts "<div class='content'>"
 
 				# print dynamic material
 				puts '<h1>' + db_user['name'] + '</h1>'
@@ -50,7 +56,8 @@ if userShow != '' && userShow.is_i?
 								' rel="nofollow">here</a> to logout.</h6>'
 
 				puts '<div id="bio"><p>bio: ' + db_user['bio'] + ' <br><div id="inline-edit" style="display: inline-block"><a href="#">edit</a></div></p></div>'
-				puts '<a href="home.rb"><button>Home</button></a>'
+				puts '</div>'
+				puts '</div>'
 				puts '</body>'
 				puts '</html>'
 			else
@@ -65,16 +72,22 @@ if userShow != '' && userShow.is_i?
 
 					puts '<html>'
 					puts '<head>'
+					puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
+					puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
 					puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
 					puts "<script type='text/javascript' src='/assets/script.js'></script>"
 					puts '</head>'
 					puts '<body>'
+					pageHeader()
+					puts "<div class='body-container'>"
+					puts "<div class='content'>"
 
 					# print dynamic material
 					puts '<h1>' + otherUser['name'] + "</h1>"
 					puts '<h6> </h6>'
 					puts '<div id="bio"><p>bio: ' + otherUser['bio'] + '</p></div>'
-					puts '<a href="home.rb"><button>Home</button></a>'
+					puts '</div>'
+					puts '</div>'
 					puts '</body>'
 					puts '</html>'
 				else

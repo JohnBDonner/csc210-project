@@ -2,6 +2,7 @@
 
 require 'cgi'
 require 'sqlite3'
+require_relative 'header.rb'
 
 cgi = CGI.new
 
@@ -11,10 +12,15 @@ if cookie.to_s() != '[]'
 	puts cgi.header()
 	puts '<html>'
 	puts '<head>'
+	puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
+	puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
 	puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
 	puts "<script type='text/javascript' src='/assets/script.js'></script>"
 	puts '</head>'
 	puts '<body>'
+	pageHeader()
+	puts "<div class='body-container'>"
+	puts "<div class='content'>"
 
 	user_sessionID = cookie.value[0]
 	begin
@@ -45,18 +51,17 @@ if cookie.to_s() != '[]'
 				name = tempUser['name']
 				id = tempUser['user_id'].to_s
 				if email != db_user['email']
-					puts "<a href='user.rb?id="+id+"' data=><li class='userItem' id='userid"+id+"'>"+id+" | "+name+"</li></a>"
+					puts "<a href='user.rb?id="+id+"' data=><li class='userItem' id='userid"+id+"'>"+name+"</li></a>"
 				else
-					puts "<li class='userItem' id='userid"+id+"'>"+id+" | "+name+"</li>"
+					puts "<li class='userItem' id='userid"+id+"'>"+name+"</li>"
 				end
 			else
 				notNil = false
 			end
 		end
 
-		puts '<a href="home.rb"><button>Home</button></a>'
-
-
+		puts '</div>'
+		puts '</div>'
 		puts '</body>'
 		puts '</html>'
 

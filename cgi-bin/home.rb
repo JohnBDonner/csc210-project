@@ -2,6 +2,7 @@
 
 require 'cgi'
 require 'sqlite3'
+require_relative 'header.rb'
 
 cgi = CGI.new
 
@@ -14,11 +15,16 @@ puts cgi.header()
 # print the home application html
 puts "<html>"
 puts "<head>"
+puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
+puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
 puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
 puts "<script type='text/javascript' src='/assets/script.js'></script>"
 puts "<title>title</title>"
 puts "</head>"
 puts "<body>"
+pageHeader()
+puts "<div class='body-container'>"
+puts "<div class='content'>"
 puts "<h1>CSC 210 Project</h1>"
 puts "<h3>by Brian Shin & John Donner</h3>"
 
@@ -37,11 +43,10 @@ if cookie.to_s() != '[]'
 	rs = stm.execute
 	db_user = rs.next_hash
 
-	puts "<h4>Welcome " + db_user['name'] + ", you are signed in. If you want, you can logout below.</h4>"
-	puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
-	puts "<a href='user.rb?id="+db_user['user_id'].to_s+"'><button>Profile</button></a>"
-	puts "<a href='showUsers.rb'><button>Users</button></a>"
-	# Code from rails: <a data-method="delete" href="/signout" rel="nofollow">Sign out</a>
+	puts "<h4>Welcome " + db_user['name'] + ", you are signed in.</h4>"
+	# puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
+	# puts "<a href='user.rb?id="+db_user['user_id'].to_s+"'><button>Profile</button></a>"
+	# puts "<a href='showUsers.rb'><button>Users</button></a>"
 else
 	# no cookie, no one's signed in
 	puts "<a href='signup.rb'><button>signup</button></a>"
@@ -49,5 +54,7 @@ else
 end
 
 # finish printing body and html tails
+puts "</div>"
+puts "</div>"
 puts "</body>"
 puts "</html>"
