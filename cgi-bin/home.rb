@@ -49,8 +49,7 @@ if cookie.to_s() != '[]'
 	# puts "<a href='showUsers.rb'><button>Users</button></a>"
 else
 	# no cookie, no one's signed in
-	puts "<a href='signup.rb'><button>signup</button></a>"
-	puts "<a href='login.rb'><button>login</button></a>"
+	# print home page out here
 end
 
 # finish printing body and html tails

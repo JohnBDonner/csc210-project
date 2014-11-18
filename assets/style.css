@@ -1,6 +1,10 @@
 
 /*  */
 
+body {
+	color: #333;
+}
+
 li {
 	text-decoration: none;
 	list-style: none;

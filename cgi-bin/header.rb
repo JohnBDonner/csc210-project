@@ -29,7 +29,7 @@ def pageHeader
 		# cookie not found
 		loggedIn = false
 	end
-
+	
 	puts '<div class="nav-container">'
 	puts '<div class="nav">'
 	# print the title
