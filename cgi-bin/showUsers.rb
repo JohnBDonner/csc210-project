@@ -51,7 +51,7 @@ if cookie.to_s() != '[]'
 				name = tempUser['name']
 				id = tempUser['user_id'].to_s
 				if email != db_user['email']
-					puts "<a href='user.rb?id="+id+"' data=><li class='userItem' id='userid"+id+"'>"+name+"</li></a>"
+					puts "<li class='userItem' id='userid"+id+"'><a href='user.rb?id="+id+"'>"+name+"</a></li>"
 				else
 					puts "<li class='userItem' id='userid"+id+"'>"+name+"</li>"
 				end
