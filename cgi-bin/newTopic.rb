@@ -61,6 +61,7 @@ if cookie.to_s() != '[]'
 
 			puts cgi.header("type" => "application/json")
 
+			# need to switch functionality from json to just go to topic page
 			myHash = {:title => topic_title, :desc => topic_desc}
 			puts myHash.to_json
 

@@ -12,10 +12,10 @@ end
 
 cgi = CGI.new
 
-userShow = cgi['id']
+topicShow = cgi['topic_id']
 cookie = cgi.cookies['user_id']
 
-if userShow != '' && userShow.is_i?
+if topicShow != '' && topicShow.is_i?
 	# the id has a value... check for cookie
 	if cookie.to_s() != '[]'
 		# user has a cookie... he's logged in
@@ -31,8 +31,49 @@ if userShow != '' && userShow.is_i?
 			rs = stm.execute
 			db_user = rs.next_hash
 
+			db.execute "CREATE TABLE IF NOT EXISTS topic(topic_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+						user_id INTEGER, title varchar(300), desc text);"
+			topic_stm = db.prepare "SELECT * FROM topic WHERE topic_id="+topicShow+";"
+			topic_rs = topic_stm.execute
+			currentTopic = topic_rs.next_hash
+
+			if !currentTopic.nil?
+				# found topic of corresponding id print out topic
+				puts cgi.header()
+
+				puts '<html>'
+				puts '<head>'
+				puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
+				puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
+				puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
+				puts "<script type='text/javascript' src='/assets/script.js'></script>"
+				puts '</head>'
+				puts '<body>'
+				pageHeader()
+				puts "<div class='body-container'>"
+				puts "<div class='content'>"
+
+				# print dynamic material
+				puts '<div id="topic">'
+				puts '<h1>' + currentTopic['title'] + "</h1>"
+				puts '<div id="topicDesc"><h3>' + currentTopic['desc'] + '</h3></div>'
+				puts '</div>'
+
+				puts '</div>'
+				puts '</div>'
+				puts '</body>'
+				puts '</html>'
+			else
+				# did not return a user corresponding to that id
+				# redirect (Change to 404)
+				puts cgi.header("status" => "302", "location" => "home.rb")
+			end
+
+
+# Want to check if current user is owner of topic
+=begin
 			# check for id number against signed in user id
-			if userShow == db_user['user_id'].to_s
+			if topicShow == db_user['user_id'].to_s
 				# the user requested to see his own page, open his profile page
 				# print out the foundations of the page
 				puts cgi.header()
@@ -62,7 +103,7 @@ if userShow != '' && userShow.is_i?
 				puts '</html>'
 			else
 				# the user requested to see another profile page, try to access profile
-				stm = db.prepare "SELECT * FROM users WHERE user_id='"+userShow+"';"
+				stm = db.prepare "SELECT * FROM users WHERE user_id='"+topicShow+"';"
 				rs = stm.execute
 				otherUser = rs.next_hash
 				if !otherUser.nil?
@@ -96,6 +137,7 @@ if userShow != '' && userShow.is_i?
 					puts cgi.header("status" => "302", "location" => "home.rb")
 				end
 			end
+=end
 		rescue SQLite3::Exception => e
 			puts "<p>Exception occured</p>"
 			puts e
