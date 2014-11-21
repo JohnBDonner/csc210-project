@@ -16,7 +16,7 @@ def pageHeader
 		# go into database and find user
 		db = SQLite3::Database.new "users.db"
 		db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
-						email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
+						email varchar(100), password varchar(100), sessionID varchar(100));"
 		stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 		rs = stm.execute
 		db_user = rs.next_hash
