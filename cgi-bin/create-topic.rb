@@ -27,11 +27,11 @@ if cookie.to_s() != '[]'
 	# start form
 	puts "<form name='createTopic' action='newTopic.rb' method='post' accept-charset='utf-8'>"
 	puts "<textarea id='topicTitle_form' name='topic_title' cols='25' rows='5' placeholder='Title'></textarea>"
+	# puts "<textfield id='topicTitle_form' name='topic_title' cols='25' rows='5' placeholder='Title'></textfield>"
 	puts "<textarea id='topicDesc_form' name='topic_desc' cols='25' rows='5' placeholder='Description'></textarea>"
 	puts "<input type='submit' value='Create Topic'>"
 	puts "</form>"
 	# end form
-	puts "<br><div id='createTopic_submit' style='display: inline-block'><a href='newTopic.rb'>Submit</a></div>"
 	puts "</div>"
 	puts "</div>"
 	puts "</div>"
