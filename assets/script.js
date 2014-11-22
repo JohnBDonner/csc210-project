@@ -52,6 +52,7 @@ $(document).ready(function() {
 	    });
 	});
 
+	/*
 	// AJAX event for creating a new topic
 	$("#topic").on("click", "#createTopic_submit", function() {
 		console.log("clicked submit");
@@ -79,5 +80,6 @@ $(document).ready(function() {
 	        },
 	    });
 	});
+*/
 
 });

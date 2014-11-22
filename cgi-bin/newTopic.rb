@@ -59,13 +59,16 @@ if cookie.to_s() != '[]'
 			db.execute "CREATE TABLE IF NOT EXISTS topic_user(topic_id INTEGER, user_id INTEGER);"
 			db.execute "INSERT INTO topic_user(topic_id, user_id) VALUES(?, ?);", [newTopic['topic_id'], db_user['user_id']]
 
+			newTopic_url = "topic.rb?topic_id="+newTopic['topic_id'].to_s()
+			puts cgi.header("status" => "302", "location" => newTopic_url)
+=begin
 			puts cgi.header("type" => "application/json")
 
 			# need to switch functionality from json to just go to topic page
 			myHash = {:title => topic_title, :desc => topic_desc}
 			puts myHash.to_json
 
-=begin
+
 			puts cgi.header()
 			puts "<html>"
 			puts "<head>"
@@ -86,6 +89,7 @@ if cookie.to_s() != '[]'
 			puts "</body>"
 			puts "</html>"
 			# assert(false, "printed shit.")
+
 =end
 		rescue SQLite3::Exception => e
 			puts "Exception occured"
