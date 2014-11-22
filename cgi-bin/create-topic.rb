@@ -26,9 +26,9 @@ if cookie.to_s() != '[]'
 	puts "<div id='topic'>"
 	# start form
 	puts "<form name='createTopic' action='newTopic.rb' method='post' accept-charset='utf-8'>"
-	puts "<textarea id='topicTitle_form' name='topic_title' cols='25' rows='5' placeholder='Title'></textarea>"
+	puts "<textarea class='topic_form_element' id='topicTitle_form' name='topic_title' cols='40' rows='1' placeholder='Title'></textarea>"
 	# puts "<textfield id='topicTitle_form' name='topic_title' cols='25' rows='5' placeholder='Title'></textfield>"
-	puts "<textarea id='topicDesc_form' name='topic_desc' cols='25' rows='5' placeholder='Description'></textarea>"
+	puts "<textarea class='topic_form_element' id='topicDesc_form' name='topic_desc' cols='80' rows='3' placeholder='Description'></textarea>"
 	puts "<input type='submit' value='Create Topic'>"
 	puts "</form>"
 	# end form

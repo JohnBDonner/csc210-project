@@ -34,10 +34,10 @@ if cookie.to_s() != '[]'
 
 		db.execute "CREATE TABLE IF NOT EXISTS topic(topic_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 						user_id INTEGER, title varchar(300), desc text);"
-		topic_stm = db.prepare "SELECT * FROM topic;"
+		topic_stm = db.prepare "SELECT * FROM topic order by topic_id desc;"
 		topic_rs = topic_stm.execute
 
-		puts "<h3>Topics</h3>"
+		puts "<div class='contentHeader'><h3>Most Recent Topics</h3></div>"
 
 		notNil = true
 		while notNil
@@ -46,7 +46,12 @@ if cookie.to_s() != '[]'
 				id = tempTopic['topic_id'].to_s
 				title = tempTopic['title']
 				desc = tempTopic['desc']
-				puts "<li class='topicItem' id='topic_id_"+id+"'><a href='topic.rb?topic_id="+id+"'>"+title+"</a></li>"
+				# puts "<a href='topic.rb?topic_id="+id+"'>"
+				puts "<div class='topicItem' id='topic_id_"+id+"'>"
+				puts "<a class='topicItem-title' href='topic.rb?topic_id="+id+"'>"+title+"</a>"
+				puts "<div class='topicItem-desc'>"+desc+"</div>"
+				puts "</div>"
+				# puts "</a>"
 			else
 				notNil = false
 			end
