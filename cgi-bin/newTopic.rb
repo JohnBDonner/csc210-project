@@ -46,9 +46,10 @@ if cookie.to_s() != '[]'
 			# assert(!db_user.nil?, "user is nil")
 
 			# Add the new topic to the topic table
+			currentTime = Time.new
 			db.execute "CREATE TABLE IF NOT EXISTS topic(topic_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-						user_id INTEGER, title varchar(300), desc text);"
-			db.execute "INSERT INTO topic(user_id, title, desc) VALUES(?, ?, ?);", [db_user['user_id'], topic_title, topic_desc]
+						user_id INTEGER, title varchar(300), desc text, created_at varchar(100), updated_at varchar(100));"
+			db.execute "INSERT INTO topic(user_id, title, desc, created_at, updated_at) VALUES(?, ?, ?, ?, ?);", [db_user['user_id'], topic_title, topic_desc, currentTime.to_s, currentTime.to_s]
 			topic_stm = db.prepare "SELECT * FROM topic order by topic_id desc limit 1;"
 			topic_rs = topic_stm.execute
 			newTopic = topic_rs.next_hash
@@ -61,36 +62,7 @@ if cookie.to_s() != '[]'
 
 			newTopic_url = "topic.rb?topic_id="+newTopic['topic_id'].to_s()
 			puts cgi.header("status" => "302", "location" => newTopic_url)
-=begin
-			puts cgi.header("type" => "application/json")
 
-			# need to switch functionality from json to just go to topic page
-			myHash = {:title => topic_title, :desc => topic_desc}
-			puts myHash.to_json
-
-
-			puts cgi.header()
-			puts "<html>"
-			puts "<head>"
-			puts "<link rel='stylesheet' type='text/css' href='/assets/normalize.css'>"
-			puts "<link rel='stylesheet' type='text/css' href='/assets/style.css'>"
-			puts "<script type='text/javascript' src='/assets/jquery.min.js'></script>"
-			puts "<script type='text/javascript' src='/assets/script.js'></script>"
-			puts "<title>title</title>"
-			puts "</head>"
-			puts "<body>"
-			pageHeader()
-			puts "<div class='body-container'>"
-			puts "<div class='content'>"
-			puts "<h1>"+newTopic['title']+"</h1>"
-			puts "<h3>"+newTopic['desc']+"</h3>"
-			puts "</div>"
-			puts "</div>"
-			puts "</body>"
-			puts "</html>"
-			# assert(false, "printed shit.")
-
-=end
 		rescue SQLite3::Exception => e
 			puts "Exception occured"
 			puts e

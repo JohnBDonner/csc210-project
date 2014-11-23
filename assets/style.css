@@ -114,3 +114,8 @@ textarea {
 	margin-top: 10px;
 }
 
+.topicItem-updated {
+	font-size: .8em;
+	color: #aaa;
+}
+
