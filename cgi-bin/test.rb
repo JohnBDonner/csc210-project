@@ -5,7 +5,11 @@ require 'sqlite3'
 
 
 cgi = CGI.new
+currentTime = Time.new
 
+puts "current time: " + Time.now.to_s
+
+=begin
 
 puts cgi.header()
 
@@ -45,7 +49,7 @@ puts "</html>"
 
 
 
-
+=end
 
 
 

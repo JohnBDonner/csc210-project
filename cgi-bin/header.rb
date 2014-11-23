@@ -16,7 +16,7 @@ def pageHeader
 		# go into database and find user
 		db = SQLite3::Database.new "users.db"
 		db.execute "CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(100),
-						email varchar(100) PRIMARY KEY, password varchar(100), sessionID varchar(100));"
+						email varchar(100), password varchar(100), sessionID varchar(100));"
 		stm = db.prepare "SELECT * FROM users WHERE sessionID='"+user_sessionID+"';"
 		rs = stm.execute
 		db_user = rs.next_hash
@@ -37,10 +37,11 @@ def pageHeader
 	if loggedIn 
 		puts '<div class="nav-links loggedIn">'
 		# Actual links
-		puts '<div class="nav-home"><a href="home.rb">Home</a></div>'
+		puts '<div class="nav-topics"><a href="showTopics.rb">Explore</a></div>'
 		puts '<div class="nav-users"><a href="showUsers.rb">Users</a></div>'
+		puts '<div class="nav-newTopic"><a href="create-topic.rb">New Topic</a></div>'
 		puts '<div class="nav-profile"><a href="user.rb?id='+currentUser_id+'">Profile</a></div>'
-		puts '<div class="nav-logout"><a data-method="DELETE" href="logout.rb" rel="nofollow">Logout</a></div>'
+		# puts '<div class="nav-logout"><a data-method="DELETE" href="logout.rb" rel="nofollow">Logout</a></div>'
 	else
 		puts '<div class="nav-links">'
 		# Actual links

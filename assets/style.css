@@ -1,8 +1,9 @@
 
-/*  */
+/* general things */
 
 body {
 	color: #333;
+	font-size: 1em;
 }
 
 li {
@@ -20,7 +21,15 @@ a:hover {
 	text-decoration: none;
 }
 
-/*  */
+textarea {
+	resize: none;
+}
+
+.content {
+	margin: 0 50px 0 50px;
+}
+
+/* header */
 
 .nav-container {
 	width: 100%;
@@ -71,8 +80,42 @@ a:hover {
 	margin-left: auto;
 }
 
-/*  */
+/* create new topic */
 
-.content {
-	margin: 0 50px 0 50px;
+.topic_form_element {
+	display: block;
+	margin-bottom: 20px;
 }
+
+/* explore page */
+
+.contentHeader {
+	padding-bottom: 10px;
+	margin-bottom: 20px;
+	border-bottom: 2px solid #ccc;
+}
+
+.contentHeader h3 {
+	margin: 0 0 0 0;
+}
+
+.topicItem {
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #ccc;
+}
+
+.topicItem-title {
+	font-size: 1.5em;
+}
+
+.topicItem-desc {
+	font-size: 1em;
+	margin-top: 10px;
+}
+
+.topicItem-updated {
+	font-size: .8em;
+	color: #aaa;
+}
+

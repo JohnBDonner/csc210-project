@@ -22,8 +22,6 @@ $(document).ready(function() {
 	        	$('#bio').empty();
 	        	$('#bio').append('<textarea id="editBio" name="comments" cols="25" rows="5" placeholder="tell us a bit about yourself...">'+dat.bio+'</textarea>');
 	        	$('#bio').append('<br><div id="inline-submit" style="display: inline-block"><a href="#">Submit</a></div>');
-	        	console.dir(dat.bio);
-	        	console.log(dat.bio);
 	        },
 	    });
 	});
@@ -47,13 +45,41 @@ $(document).ready(function() {
 	        success: function(dat) {
 	        	$('#bio').empty();
 	        	$('#bio').append('<p>bio: ' + dat.bio + ' <br><div id="inline-edit" style="display: inline-block"><a href="#">edit</a></div></p>');
-	        	console.dir(dat.bio);
-	        	console.log(dat.bio);
 	        },
 	        failure: function(dat) {
 	        	console.log("failed");
 	        },
 	    });
 	});
+
+	/*
+	// AJAX event for creating a new topic
+	$("#topic").on("click", "#createTopic_submit", function() {
+		console.log("clicked submit");
+
+		$.ajax({
+	        url: "newTopic.rb",
+	        // post this data to the server ...
+	        type: "POST",
+	        // grab data from the stuffInput text box
+	        data: {
+	        	topic_title: $("#topicTitle_form").val(),
+	        	topic_desc: $("#topicDesc_form").val()
+	        },
+
+	        // the script will also return data back to the browser, so
+	        // handle it here ...
+	        dataType: "json",
+	        success: function(dat) {
+	        	$('#topic').empty();
+	        	$('#topic').append('<h1>' + dat.title + '</h1>');
+	        	$('#topic').append('<h3>' + dat.desc + '</h3>');
+	        },
+	        failure: function(dat) {
+	        	console.log("failed");
+	        },
+	    });
+	});
+*/
 
 });
