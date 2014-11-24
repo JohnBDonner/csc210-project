@@ -115,7 +115,22 @@ textarea {
 }
 
 .topicItem-updated {
+	display: inline;
 	font-size: .8em;
 	color: #aaa;
+}
+
+.topicItem-edit {
+	display: inline;
+	margin-left: 10px;
+}
+
+.topicItem-delete {
+	display: inline;
+	margin-left: 10px;
+}
+
+.topicDeleted-message {
+	color: #D47D80;
 }
 

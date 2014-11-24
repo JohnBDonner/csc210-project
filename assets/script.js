@@ -52,34 +52,41 @@ $(document).ready(function() {
 	    });
 	});
 
-	/*
-	// AJAX event for creating a new topic
-	$("#topic").on("click", "#createTopic_submit", function() {
-		console.log("clicked submit");
+	// AJAX event for deleting a topic
+	$(".topicItem").on("click", ".topicItem-delete", function() {
+		// Do this before AJAX
+		targetCSS_id = $(this).attr('id');
+		targetTopic_id = targetCSS_id.match(/\d+/);
+		deletedDiv = $(this).parent();
+		// Upon success...
+		// deletedDiv.append("<div class='topicDeleted-message'>Topic successfully deleted</div>");
+		// Upon failure...
+		// deletedDiv.append("<div class='topicDeleted-message'>Something went wrong, your topic was not deleted</div>");
+		console.log("clicked div: "+$(this));
+		console.log("id: "+targetTopic_id);
 
 		$.ajax({
-	        url: "newTopic.rb",
+	        url: "deleteTopic.rb",
 	        // post this data to the server ...
-	        type: "POST",
-	        // grab data from the stuffInput text box
+	        type: "DELETE",
+	        // grab the id of the div
 	        data: {
-	        	topic_title: $("#topicTitle_form").val(),
-	        	topic_desc: $("#topicDesc_form").val()
+	        	targetTopic: targetCSS_id
 	        },
 
 	        // the script will also return data back to the browser, so
 	        // handle it here ...
 	        dataType: "json",
 	        success: function(dat) {
-	        	$('#topic').empty();
-	        	$('#topic').append('<h1>' + dat.title + '</h1>');
-	        	$('#topic').append('<h3>' + dat.desc + '</h3>');
+	        	console.log(dat);
+	        	console.log("id sent back: " + dat.deletedTopic_id);
+	        	deletedDiv.empty();
+	        	deletedDiv.append("<div class='topicDeleted-message'>"+dat.deletedTopic_title+" was successfully deleted.</div>");
 	        },
 	        failure: function(dat) {
-	        	console.log("failed");
+	        	deletedDiv.append("<div class='topicDeleted-message'>Something went wrong, your topic was not deleted</div>");
 	        },
 	    });
 	});
-*/
 
 });
