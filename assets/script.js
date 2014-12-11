@@ -89,4 +89,56 @@ $(document).ready(function() {
 	    });
 	});
 
+	// AJAX event for creating new post
+	$("#newpost").on("click", ".createPost", function() {
+		// Do this before AJAX
+		$('#newpost').empty();
+		$('#newpost').append('<textarea id="newPost-displayText" name="newPost" cols="50" rows="1" placeholder="Display text"></textarea>');
+		$('#newpost').append('<textarea id="newPost-url" name="newPost" cols="80" rows="1" placeholder="Paste in a url here"></textarea>');
+		$('#newpost').append('<br><div id="inline-cancel" style="display: inline-block"><a href="#">Cancel</a></div>');
+	    $('#newpost').append('<br><div id="inline-submit" style="display: inline-block"><a href="#">Submit</a></div>');
+
+		$("#newpost").on("click", "#inline-submit", function() {
+			console.log("'post' submit clicked");
+			targetCSS_id = $('.topic').attr('id');
+			targetTopic_id = targetCSS_id.match(/\d+/);
+			
+			if ( ($("#newPost-displayText").val() != null && $("#newPost-url").val() != null) && ($("#newPost-displayText").val() != "" && $("#newPost-url").val() != "") ) {
+				$.ajax({
+			        url: "createPost.rb",
+			        // post this data to the server ...
+			        type: "POST",
+			        // grab data from the stuffInput text box
+			        data: {
+			        	topic_id: targetCSS_id,
+			        	post_content: $("#newPost-displayText").val(),
+			        	post_url: $("#newPost-url").val()
+			        },
+
+			        // the script will also return data back to the browser, so
+			        // handle it here ...
+			        dataType: "json",
+			        success: function(dat) {
+			        	window.location.reload(true);
+			        	/*
+			        	$('#newpost').empty();
+			        	$('#newpost').append('<div class="createPost-div"><a class="createPost" href="#">Add new link</a></div>');
+			        	$('#posts').append('<a href="' + dat.post_url + '">' + dat.post_content + ' <a/><div id="inline-edit" style="display: inline-block"> | <a href="#">edit</a></div></p>');
+			        	*/
+			        },
+			        failure: function(dat) {
+			        	console.log("failed");
+			        },
+			    });
+			}
+
+		});
+
+		$("#newpost").on("click", "#inline-cancel", function() {
+			$('#newpost').empty();
+			$('#newpost').append('<a class="createPost" href="#">Add new link</a>');
+		});
+		
+	});
+
 });

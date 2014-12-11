@@ -134,3 +134,22 @@ textarea {
 	color: #D47D80;
 }
 
+/* Individual topic page */
+
+#newpost {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-top: 2px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.postItem {
+	margin-top: 20px;
+}
+
+.postItem-updated {
+	display: inline;
+	font-size: .8em;
+	color: #aaa;
+}
+

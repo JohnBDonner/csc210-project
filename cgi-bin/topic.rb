@@ -32,7 +32,7 @@ if topicShow != '' && topicShow.is_i?
 			db_user = rs.next_hash
 
 			db.execute "CREATE TABLE IF NOT EXISTS topic(topic_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-						user_id INTEGER, title varchar(300), desc text);"
+						user_id INTEGER, title varchar(300), desc text, created_at varchar(100), updated_at varchar(100));"
 			topic_stm = db.prepare "SELECT * FROM topic WHERE topic_id="+topicShow+";"
 			topic_rs = topic_stm.execute
 			currentTopic = topic_rs.next_hash
@@ -54,9 +54,40 @@ if topicShow != '' && topicShow.is_i?
 				puts "<div class='content'>"
 
 				# print dynamic material
-				puts '<div id="topic">'
+				puts '<div class="topic" id="topic_id_'+currentTopic['topic_id'].to_s+'">'
 				puts '<h1>' + currentTopic['title'] + "</h1>"
 				puts '<div id="topicDesc"><h3>' + currentTopic['desc'] + '</h3></div>'
+				puts '<div id="posts">'
+				puts '<div id="newpost"><a class="createPost" href="#">Add new link</a></div>'
+				# while loop printing out posts in order of most upvotes(?)
+				db.execute "create table IF NOT EXISTS post(post_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+							topic_id INTEGER, user_id INTEGER, url text, content text, 
+							up_votes INTEGER, created_at varchar(100), updated_at varchar(100));"
+				post_stm = db.prepare "SELECT * FROM post WHERE topic_id=? order by updated_at desc;"
+				post_stm.bind_param 1, currentTopic['topic_id']
+				post_rs = post_stm.execute
+
+				notNil = true
+				while notNil
+					tempPost = post_rs.next_hash
+					if !tempPost.nil?
+						getPostUser = db.prepare "SELECT * FROM users WHERE user_id=?"
+						getPostUser.bind_param 1, tempPost['user_id']
+						postUser = getPostUser.execute
+						userOfPost = postUser.next_hash
+						puts '<div class="postItem" id="postItem_id_'+tempPost['post_id'].to_s+'">'
+
+						puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+						puts '<div class="postItem-user">Posted by '+userOfPost['name']+'</div>'
+						puts '<div class="postItem-updated">Last updated '+tempPost['updated_at'].to_s+'</div>'
+
+						puts '</div>'
+					else
+						notNil = false
+					end
+				end
+
+				puts '</div>'
 				puts '</div>'
 
 				puts '</div>'
