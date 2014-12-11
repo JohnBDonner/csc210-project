@@ -44,15 +44,19 @@ if cookie.to_s() != '[]'
 	db_user = rs.next_hash
 
 	puts "<h4>Welcome " + db_user['name'] + ", you are signed in.</h4>"
+	puts "<p>A web application that collects all of the best resources and links for anything, curated by you.</p>"
 	# puts "<a data-method='DELETE' href='logout.rb' rel='nofollow'><button>logout</button></a>"
 	# puts "<a href='user.rb?id="+db_user['user_id'].to_s+"'><button>Profile</button></a>"
 	# puts "<a href='showUsers.rb'><button>Users</button></a>"
 else
 	# no cookie, no one's signed in
 	# print home page out here
+	puts "<p>A web application that collects all of the best resources and links for anything, curated by you.</p>"
+	puts "<p>Use the sign in or sign up buttons to log in or create an account.</p>"
 end
 
 # finish printing body and html tails
+
 puts "</div>"
 puts "</div>"
 puts "</body>"
