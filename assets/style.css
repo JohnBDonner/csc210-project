@@ -144,7 +144,17 @@ textarea {
 }
 
 .postItem {
+	display: inline-block;
+	width: 100%;
 	margin-top: 20px;
+}
+
+.postItem-left {
+	float: left;
+}
+
+.postItem-right {
+	float: right;
 }
 
 .postItem-updated {
@@ -153,3 +163,12 @@ textarea {
 	color: #aaa;
 }
 
+#newPost #inline-submit {
+	display: inline-block;
+	float: right;
+}
+
+#newPost #inline-cancel {
+	display: inline-block;
+	float: left;
+}

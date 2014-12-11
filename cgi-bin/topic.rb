@@ -76,10 +76,23 @@ if topicShow != '' && topicShow.is_i?
 						postUser = getPostUser.execute
 						userOfPost = postUser.next_hash
 						puts '<div class="postItem" id="postItem_id_'+tempPost['post_id'].to_s+'">'
-
-						puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+						puts '<div class="postItem-left">'
+						if tempPost['url'].downcase().include? "youtube.com/watch?v="
+							# Embed video
+							youtubeId = tempPost['url'].sub(/.*?=/, '')
+							puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+							puts '<div><iframe width="560" height="315" src="//www.youtube.com/embed/'+youtubeId+'" frameborder="0" allowfullscreen></iframe></div>'
+						else
+							# Normal link
+							puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+						end
 						puts '<div class="postItem-user">Posted by '+userOfPost['name']+'</div>'
 						puts '<div class="postItem-updated">Last updated '+tempPost['updated_at'].to_s+'</div>'
+						puts '</div>'
+						puts '<div class="postItem-right">'
+						puts '<div class="postItem-upVotes">'+tempPost['up_votes'].to_s+' upvotes</div>'
+						puts '<a class="upvote-link" href="#">upvote</a>'
+						puts '</div>'
 
 						puts '</div>'
 					else
