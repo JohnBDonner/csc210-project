@@ -34,7 +34,7 @@ if cookie.to_s() != '[]'
 
 		db.execute "CREATE TABLE IF NOT EXISTS topic(topic_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 						user_id INTEGER, title varchar(300), desc text, created_at varchar(100), updated_at varchar(100));"
-		topic_stm = db.prepare "SELECT * FROM topic order by topic_id desc;"
+		topic_stm = db.prepare "SELECT * FROM topic order by updated_at desc;"
 		topic_rs = topic_stm.execute
 
 		puts "<div class='contentHeader'><h3>Most Recent Topics</h3></div>"

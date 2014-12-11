@@ -11,7 +11,7 @@ end
 require 'cgi'
 require 'sqlite3'
 require 'json'
-# I want this file to be JSON return... temp. print out stuff
+# This might be better as a JSON file, but for now is a page that is separate from the topic page
 require_relative 'header.rb'
 
 cgi = CGI.new
