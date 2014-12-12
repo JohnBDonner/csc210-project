@@ -63,7 +63,7 @@ if topicShow != '' && topicShow.is_i?
 				db.execute "create table IF NOT EXISTS post(post_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 							topic_id INTEGER, user_id INTEGER, url text, content text, 
 							up_votes INTEGER, created_at varchar(100), updated_at varchar(100));"
-				post_stm = db.prepare "SELECT * FROM post WHERE topic_id=? order by updated_at desc;"
+				post_stm = db.prepare "SELECT * FROM post WHERE topic_id=? order by up_votes desc;"
 				post_stm.bind_param 1, currentTopic['topic_id']
 				post_rs = post_stm.execute
 
@@ -80,18 +80,27 @@ if topicShow != '' && topicShow.is_i?
 						if tempPost['url'].downcase().include? "youtube.com/watch?v="
 							# Embed video
 							youtubeId = tempPost['url'].sub(/.*?=/, '')
-							puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+							puts '<a href="'+tempPost['url']+'" target="_blank">'+tempPost['content']+'</a>'
 							puts '<div><iframe width="560" height="315" src="//www.youtube.com/embed/'+youtubeId+'" frameborder="0" allowfullscreen></iframe></div>'
 						else
 							# Normal link
-							puts '<a href="'+tempPost['url']+'">'+tempPost['content']+'</a>'
+							puts '<a href="'+tempPost['url']+'" target="_blank">'+tempPost['content']+'</a>'
 						end
 						puts '<div class="postItem-user">Posted by '+userOfPost['name']+'</div>'
 						puts '<div class="postItem-updated">Last updated '+tempPost['updated_at'].to_s+'</div>'
 						puts '</div>'
 						puts '<div class="postItem-right">'
 						puts '<div class="postItem-upVotes">'+tempPost['up_votes'].to_s+' upvotes</div>'
-						puts '<a class="upvote-link" href="#">upvote</a>'
+
+						# Check if user has upvoted the post
+						db.execute "create table if not exists vote(vote_id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER, user_id INTEGER, updated_at varchar(100));"
+						userUpVoted = db.execute "SELECT * FROM vote WHERE user_id=? AND post_id=?;", [db_user['user_id'], tempPost['post_id']]
+						vote = userUpVoted[0]
+						if vote.nil?
+							puts '<a class="upvote-link" href="#">upvote</a>'
+						else
+							puts '<a class="un-upvote-link" href="#">un-upvote</a>'
+						end
 						puts '</div>'
 
 						puts '</div>'
@@ -105,6 +114,7 @@ if topicShow != '' && topicShow.is_i?
 
 				puts '</div>'
 				puts '</div>'
+				pageFooter()
 				puts '</body>'
 				puts '</html>'
 			else

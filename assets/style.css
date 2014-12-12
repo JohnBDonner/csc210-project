@@ -172,3 +172,17 @@ textarea {
 	display: inline-block;
 	float: left;
 }
+
+/* footer */
+
+.footer-container {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	width: 100%;
+}
+
+.footer {
+	font-size: .8em;
+	text-align: center;
+}
+

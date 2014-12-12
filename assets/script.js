@@ -8,8 +8,6 @@ $(document).ready(function() {
 	// AJAX event for clicking the edit bio button
 	$("#bio").on("click", "#inline-edit", function() {
 
-		console.log("clicked edit");
-
 	    $.ajax({
 	        url: "about.rb",
 	        // post this data to the server ...
@@ -28,7 +26,6 @@ $(document).ready(function() {
 
 	// AJAX event for clicking the submit new bio button while editing
 	$("#bio").on("click", "#inline-submit", function() {
-		console.log("clicked submit");
 
 		$.ajax({
 	        url: "newBio.rb",
@@ -62,8 +59,6 @@ $(document).ready(function() {
 		// deletedDiv.append("<div class='topicDeleted-message'>Topic successfully deleted</div>");
 		// Upon failure...
 		// deletedDiv.append("<div class='topicDeleted-message'>Something went wrong, your topic was not deleted</div>");
-		console.log("clicked div: "+$(this));
-		console.log("id: "+targetTopic_id);
 
 		$.ajax({
 	        url: "deleteTopic.rb",
@@ -99,7 +94,6 @@ $(document).ready(function() {
 	    $('#newpost').append('<br><div id="inline-submit" style="display: inline-block"><a href="#">Submit</a></div>');
 
 		$("#newpost").on("click", "#inline-submit", function() {
-			console.log("'post' submit clicked");
 			targetCSS_id = $('.topic').attr('id');
 			targetTopic_id = targetCSS_id.match(/\d+/);
 			
@@ -139,6 +133,74 @@ $(document).ready(function() {
 			$('#newpost').append('<a class="createPost" href="#">Add new link</a>');
 		});
 		
+	});
+
+	// AJAX event for upvoting
+	$(".postItem").on("click", ".upvote-link", function() {
+		
+		targetPost_id = $($(this).parent().parent()).attr('id');
+		targetTopic_id = $('.topic').attr('id');
+		
+		$.ajax({
+	        url: "newVote.rb",
+	        // post this data to the server ...
+	        type: "POST",
+	        // grab data from the stuffInput text box
+	        data: {
+	        	topic_id: targetTopic_id,
+	        	post_id: targetPost_id
+	        },
+
+	        // the script will also return data back to the browser, so
+	        // handle it here ...
+	        dataType: "json",
+	        success: function(dat) {
+	        	window.location.reload(true);
+	        	/*
+	        	$('#newpost').empty();
+	        	$('#newpost').append('<div class="createPost-div"><a class="createPost" href="#">Add new link</a></div>');
+	        	$('#posts').append('<a href="' + dat.post_url + '">' + dat.post_content + ' <a/><div id="inline-edit" style="display: inline-block"> | <a href="#">edit</a></div></p>');
+	        	*/
+	        },
+	        failure: function(dat) {
+	        	console.log("failed");
+	        },
+	    });
+
+	});
+
+	// AJAX event for undoing an upvote
+	$(".postItem").on("click", ".un-upvote-link", function() {
+		
+		targetPost_id = $($(this).parent().parent()).attr('id');
+		targetTopic_id = $('.topic').attr('id');
+		
+		$.ajax({
+	        url: "unVote.rb",
+	        // post this data to the server ...
+	        type: "POST",
+	        // grab data from the stuffInput text box
+	        data: {
+	        	topic_id: targetTopic_id,
+	        	post_id: targetPost_id
+	        },
+
+	        // the script will also return data back to the browser, so
+	        // handle it here ...
+	        dataType: "json",
+	        success: function(dat) {
+	        	window.location.reload(true);
+	        	/*
+	        	$('#newpost').empty();
+	        	$('#newpost').append('<div class="createPost-div"><a class="createPost" href="#">Add new link</a></div>');
+	        	$('#posts').append('<a href="' + dat.post_url + '">' + dat.post_content + ' <a/><div id="inline-edit" style="display: inline-block"> | <a href="#">edit</a></div></p>');
+	        	*/
+	        },
+	        failure: function(dat) {
+	        	console.log("failed");
+	        },
+	    });
+
 	});
 
 });

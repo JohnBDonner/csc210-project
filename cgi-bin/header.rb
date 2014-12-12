@@ -53,4 +53,8 @@ def pageHeader
 	puts '</div>'
 end
 
-
+def pageFooter
+	puts '<div class="footer-container">'
+	puts '<div class="footer">Created by John Donner & Brian Shin</div>'
+	puts '</div>'
+end
